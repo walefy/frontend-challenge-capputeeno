@@ -1,6 +1,10 @@
 import { styled } from 'styled-components';
+import { InputWithSearchIcon } from './Input';
 
 const HeaderContainer = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 19px 160px;
 `;
 
@@ -18,6 +22,7 @@ export function HeaderBar() {
   return (
     <HeaderContainer>
       <Logo>capputeeno</Logo>
+      <InputWithSearchIcon placeholder="Procurando por algo expecífico?" />
     </HeaderContainer>
   );
 }
