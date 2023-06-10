@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import { InputWithSearchIcon } from './Input';
 import { ShoppingBagIcon } from './IconsComponets';
+import { useProductsQuery } from '../hooks/useProductsQuery';
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -60,8 +61,13 @@ const DotCount = styled.span`
   letter-spacing: 0em;
   color: white;
 `;
+
 export function HeaderBar() {
-  const countProducts = ['', ''];
+  const { data: products, isFetching, isError } = useProductsQuery();
+
+  if (isError) return <p>Error</p>
+  if (isFetching) return <p>Fetching</p>
+
   return (
     <HeaderContainer>
       <Logo>capputeeno</Logo>
@@ -69,7 +75,7 @@ export function HeaderBar() {
         <InputWithSearchIcon placeholder="Procurando por algo expecífico?" />
         <BagButton>
           <ShoppingBagIcon />
-          {countProducts.length > 0 && <DotCount>{countProducts.length}</DotCount>}
+          {(products?.length ?? 0) > 0 && <DotCount>{products?.length}</DotCount>}
         </BagButton>
       </InputAndBagContainer>
     </HeaderContainer>
