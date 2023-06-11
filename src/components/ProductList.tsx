@@ -1,5 +1,4 @@
 import { styled } from 'styled-components';
-import { useProductsQuery } from '../hooks/useProductsQuery';
 import { ProductCard } from './ProductCard';
 import { ProductWithId } from '../types/types';
 
