@@ -8,15 +8,16 @@ type ProductResponse = {
 
 export function useProductsQuery() {
   const query = gql`
-  {
-    allProducts {
-      name
-      description
-      image_url
-      category
+    {
+      allProducts {
+        name
+        description
+        image_url
+        category
+        price_in_cents
+      }
     }
-  }
-`;
+  `;
 
   return useQuery('products', async () => {
     const data: ProductResponse = await request('http://localhost:3333/', query);

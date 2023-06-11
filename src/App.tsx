@@ -1,8 +1,9 @@
 import './App.css';
+import { ProductCard } from './components/ProductCard';
 
 export function App() {
   return (
-    <h1>Hello, World</h1>
+    <ProductCard />
   )
 }
 
