@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useProductsQuery } from "../hooks/useProductsQuery";
 import { styled } from "styled-components";
 import { ProductList } from "../components/ProductList";
@@ -57,8 +57,6 @@ export function Catalog() {
   const [productsWithFilter, setProductsWithFilter] = useState<ProductWithId[]>([]);
   const { data: products = [] } = useProductsQuery();
 
-  useEffect(() => setProductsWithFilter(products), [ products ]);
-
   const handleClickButtonScreen = (filter: string) => {
     const tempProducts = [...products];
     if (filter === 'all') {
@@ -102,7 +100,7 @@ export function Catalog() {
         </Select>
       </LowHeaderConatiner>
       <ProductListContainer>
-        <ProductList products={ productsWithFilter } />
+        <ProductList products={ productsWithFilter.length > 0 ? productsWithFilter : products } />
       </ProductListContainer>
     </CatalogConatiner>
   );
