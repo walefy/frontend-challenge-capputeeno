@@ -16,6 +16,8 @@ export function useProductsQuery() {
         image_url
         category
         price_in_cents
+        sales
+        created_at
       }
     }
   `;
