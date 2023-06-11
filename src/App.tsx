@@ -1,10 +1,13 @@
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import { ProductList } from './components/ProductList';
+import { Catalog } from './pages/Catalog';
 
 export function App() {
   return (
-    <ProductList />
-  )
+    <Routes>
+      <Route path="/" element={ <Catalog /> } />
+    </Routes>
+  );
 }
 
 

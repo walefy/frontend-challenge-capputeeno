@@ -6,6 +6,7 @@ const ListOfProducts = styled.ul`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   row-gap: 24px;
+  column-gap: 32px;
 
   li {
     list-style: none;
@@ -13,7 +14,7 @@ const ListOfProducts = styled.ul`
 `;
 
 export function ProductList() {
-  const { data: products, isFetching, isError } = useProductsQuery();
+  const { data: products } = useProductsQuery();
 
   return (
     <ListOfProducts>

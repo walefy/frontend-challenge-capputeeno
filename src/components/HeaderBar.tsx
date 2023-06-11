@@ -1,7 +1,6 @@
 import { styled } from 'styled-components';
 import { InputWithSearchIcon } from './Input';
 import { ShoppingBagIcon } from './IconsComponets';
-import { useProductsQuery } from '../hooks/useProductsQuery';
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -63,7 +62,7 @@ const DotCount = styled.span`
 `;
 
 export function HeaderBar() {
-  const { data: products, isFetching, isError } = useProductsQuery();
+  const products = [1, 2, 3,  4, 5, 6, 7, 8, 9, 10, 11];
 
   return (
     <HeaderContainer>
