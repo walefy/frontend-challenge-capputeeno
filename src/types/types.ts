@@ -5,3 +5,5 @@ export type Product = {
   category: string;
   price_in_cents: number;
 };
+
+export type ProductWithId = Product & { id: string };

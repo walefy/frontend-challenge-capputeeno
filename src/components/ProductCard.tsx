@@ -33,12 +33,18 @@ const Price = styled.p`
   color: var(--shapes-dark-color);
 `;
 
-export function ProductCard() {
+type ProductCardProps = {
+  imageUrl: string;
+  name: string;
+  price: number;
+};
+
+export function ProductCard({ imageUrl, name, price }: ProductCardProps) {
   return (
     <CardContainer>
-      <Image src="https://storage.googleapis.com/xesque-dev/challenge-images/caneca-06.jpg" alt="" width={ 256 } height={ 300 } />
-      <Name>Caneca de cerâmica rústica</Name>
-      <Price>{ (6551 / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }</Price>
+      <Image src={ imageUrl } alt={ name } width={ 256 } height={ 300 } />
+      <Name>{ name }</Name>
+      <Price>{ (price / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }</Price>
     </CardContainer>
   );
 }

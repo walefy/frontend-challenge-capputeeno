@@ -65,9 +65,6 @@ const DotCount = styled.span`
 export function HeaderBar() {
   const { data: products, isFetching, isError } = useProductsQuery();
 
-  if (isError) return <p>Error</p>
-  if (isFetching) return <p>Fetching</p>
-
   return (
     <HeaderContainer>
       <Logo>capputeeno</Logo>
