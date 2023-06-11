@@ -45,7 +45,13 @@ const CatalogConatiner = styled.div`
 `;
 
 const Select = styled.select`
-  // height: 15px;
+  display: flex;
+  gap: 8px;
+  padding: 0 16px 0 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--dark-color);
 `;
 
 const ButtonScreen = styled.button`
@@ -119,7 +125,9 @@ export function Catalog() {
           </ul>
         </Navigation>
         <Select>
-          <option value="test">test</option>
+          <option value="news">Novidades</option>
+          <option value="decreasing">Preço: Maior - menor</option>
+          <option value="increasing">Preço: Menor - maior</option>
         </Select>
       </LowHeaderConatiner>
       <ProductListContainer>
