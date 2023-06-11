@@ -3,6 +3,7 @@ import { useProductsQuery } from "../hooks/useProductsQuery";
 import { styled } from "styled-components";
 import { ProductList } from "../components/ProductList";
 import { Product } from "../types/types";
+import { sortByDate, sortByPriceDecreasing, sortByPriceIncreasing } from "../services/sortProducts";
 
 const ProductListContainer = styled.div`
   display: flex;
@@ -70,27 +71,56 @@ const ButtonScreen = styled.button`
   text-transform: uppercase;
 `;
 
+type ProductsWithFilter = {
+  products: Product[];
+  filter: string;
+}
+
 const INITIAL_HIGTHLIGHT = {
   'all': false,
   't-shirts': false,
   'mugs': false,
 };
 
+const functionsOrderBy = {
+  normal(ListOfProducts: Product[]) { return ListOfProducts },
+  news: sortByDate,
+  decreasing: sortByPriceDecreasing,
+  increasing: sortByPriceIncreasing,
+}
+
 export function Catalog() {
-  const [productsWithFilter, setProductsWithFilter] = useState<Product[]>([]);
+  const [productsWithFilter, setProductsWithFilter] = useState<ProductsWithFilter>({
+    products: [],
+    filter: 'normal',
+  });
   const [higthligth, setHigthligth] = useState({ ...INITIAL_HIGTHLIGHT, all: true } );
   const { data: products = [] } = useProductsQuery();
 
   const handleClickButtonScreen = (filter: string) => {
-    const tempProducts = [...products];
+    const key = productsWithFilter.filter as keyof typeof functionsOrderBy;
+    const orderFunc = functionsOrderBy[key];
+    const tempProducts = orderFunc([...products]);
     setHigthligth({ ...INITIAL_HIGTHLIGHT, [filter]: true });
     
     if (filter === 'all') {
-      setProductsWithFilter(tempProducts);
+      setProductsWithFilter({ ...productsWithFilter, products: tempProducts });
       return;
     }
 
-    setProductsWithFilter(tempProducts.filter((product) => product.category === filter));
+    setProductsWithFilter({
+      ...productsWithFilter,
+      products: tempProducts.filter((product) => product.category === filter)
+    });
+  };
+
+  const handleChangeSelect = ({ target }: React.ChangeEvent<HTMLSelectElement>) => {
+    const key = target.value as keyof typeof functionsOrderBy;
+    const orderFunc = functionsOrderBy[key];
+    const tempProducts = productsWithFilter.products.length > 0
+      ? orderFunc([...productsWithFilter.products])
+      : orderFunc([...products]);
+    setProductsWithFilter({ products: tempProducts, filter: target.value });
   };
 
   return (
@@ -124,14 +154,18 @@ export function Catalog() {
             </li>
           </ul>
         </Navigation>
-        <Select>
+        <Select onChange={ handleChangeSelect } defaultValue="">
+        <option value="" disabled>Ordernar por</option>
           <option value="news">Novidades</option>
           <option value="decreasing">Preço: Maior - menor</option>
           <option value="increasing">Preço: Menor - maior</option>
         </Select>
       </LowHeaderConatiner>
       <ProductListContainer>
-        <ProductList products={ productsWithFilter.length > 0 ? productsWithFilter : products } />
+        <ProductList products={ productsWithFilter.products.length > 0
+          ? productsWithFilter.products
+          : products }
+        />
       </ProductListContainer>
     </CatalogConatiner>
   );
