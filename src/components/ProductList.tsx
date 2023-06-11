@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import { useProductsQuery } from '../hooks/useProductsQuery';
 import { ProductCard } from './ProductCard';
+import { ProductWithId } from '../types/types';
 
 const ListOfProducts = styled.ul`
   display: grid;
@@ -13,13 +14,15 @@ const ListOfProducts = styled.ul`
   }
 `;
 
-export function ProductList() {
-  const { data: products } = useProductsQuery();
+type ProductListProps = {
+  products: ProductWithId[];
+};
 
+export function ProductList({ products }: ProductListProps) {
   return (
     <ListOfProducts>
       {
-        products?.map((product) => (
+        products.map((product) => (
           <li>
             <ProductCard
               imageUrl={ product.image_url }
