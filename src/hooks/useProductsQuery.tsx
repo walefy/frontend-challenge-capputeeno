@@ -1,7 +1,6 @@
 import { useQuery } from 'react-query';
 import { gql, request } from 'graphql-request';
-import { Product, ProductWithId } from '../types/types';
-import { nanoid } from 'nanoid';
+import { Product } from '../types/types';
 
 type ProductResponse = {
   allProducts: Product[];
@@ -11,6 +10,7 @@ export function useProductsQuery() {
   const query = gql`
     {
       allProducts {
+        id
         name
         description
         image_url
@@ -22,8 +22,7 @@ export function useProductsQuery() {
 
   return useQuery('products', async () => {
     const data: ProductResponse = await request('http://localhost:3333/', query);
-    const allProducts: ProductWithId[] = data.allProducts.map((product) => ({ ...product, id: nanoid() }));
-    return allProducts;
+    return data.allProducts;
   }, {
     staleTime: 1000 * 60 // 1 minute
   });

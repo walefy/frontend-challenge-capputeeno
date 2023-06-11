@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import { ProductCard } from './ProductCard';
-import { ProductWithId } from '../types/types';
+import { Product } from '../types/types';
 
 const ListOfProducts = styled.ul`
   display: grid;
@@ -14,7 +14,7 @@ const ListOfProducts = styled.ul`
 `;
 
 type ProductListProps = {
-  products: ProductWithId[];
+  products: Product[];
 };
 
 export function ProductList({ products }: ProductListProps) {

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useProductsQuery } from "../hooks/useProductsQuery";
 import { styled } from "styled-components";
 import { ProductList } from "../components/ProductList";
-import { ProductWithId } from "../types/types";
+import { Product } from "../types/types";
 
 const ProductListContainer = styled.div`
   display: flex;
@@ -18,6 +18,16 @@ const Navigation = styled.nav`
   ul {
     display: flex;
     column-gap: 40px;
+  }
+
+  .highlight {
+    font-family: 'Saira';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    color: #41414D;
+    border-bottom: 4px solid #FFA585;
   }
 `;
 
@@ -44,6 +54,7 @@ const ButtonScreen = styled.button`
   line-height: 0;
   cursor: pointer;
   background-color: transparent;
+  color: var(--dark-color);
 
   font-family: Saira;
   font-size: 16px;
@@ -53,12 +64,21 @@ const ButtonScreen = styled.button`
   text-transform: uppercase;
 `;
 
+const INITIAL_HIGTHLIGHT = {
+  'all': false,
+  't-shirts': false,
+  'mugs': false,
+};
+
 export function Catalog() {
-  const [productsWithFilter, setProductsWithFilter] = useState<ProductWithId[]>([]);
+  const [productsWithFilter, setProductsWithFilter] = useState<Product[]>([]);
+  const [higthligth, setHigthligth] = useState({ ...INITIAL_HIGTHLIGHT, all: true } );
   const { data: products = [] } = useProductsQuery();
 
   const handleClickButtonScreen = (filter: string) => {
     const tempProducts = [...products];
+    setHigthligth({ ...INITIAL_HIGTHLIGHT, [filter]: true });
+    
     if (filter === 'all') {
       setProductsWithFilter(tempProducts);
       return;
@@ -75,6 +95,7 @@ export function Catalog() {
             <li>
               <ButtonScreen
                 onClick={() => handleClickButtonScreen('all')}
+                className={ higthligth.all ? 'highlight' : '' }
               >
                 Todos os produtos
               </ButtonScreen>
@@ -82,6 +103,7 @@ export function Catalog() {
             <li>
               <ButtonScreen
                 onClick={() => handleClickButtonScreen('t-shirts')}
+                className={ higthligth["t-shirts"] ? 'highlight' : '' }
               >
                 Camisetas
               </ButtonScreen>
@@ -89,6 +111,7 @@ export function Catalog() {
             <li>
               <ButtonScreen
                 onClick={() => handleClickButtonScreen('mugs')}
+                className={ higthligth.mugs ? 'highlight' : '' }
               >
                 Canecas
               </ButtonScreen>
