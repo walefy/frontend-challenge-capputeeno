@@ -116,7 +116,7 @@ export function Catalog() {
 
   const handleChangeSelect = ({ target }: React.ChangeEvent<HTMLSelectElement>) => {
     const key = target.value as keyof typeof functionsOrderBy;
-    const orderFunc = functionsOrderBy[key];
+    const orderFunc = functionsOrderBy[key || 'normal'];
     const tempProducts = productsWithFilter.products.length > 0
       ? orderFunc([...productsWithFilter.products])
       : orderFunc([...products]);
