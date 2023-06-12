@@ -12,7 +12,6 @@ export function App() {
 
 // TODO: Make a search bar functionality
 
-
 // TODO: Create components
 // TODO: Configurate React-Query
 // TODO: Create Routers and pages (react-router-dom)
